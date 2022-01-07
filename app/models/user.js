@@ -6,12 +6,17 @@ const userSchema = new mongoose.Schema({
     required: true,
     unique: true
   },
+  username: {
+    type: String,
+    required: true
+  },
   hashedPassword: {
     type: String,
     required: true
   },
   token: String,
-  posts: Number
+  posts: Number,
+  language: String
 }, {
   timestamps: true,
   toObject: {
