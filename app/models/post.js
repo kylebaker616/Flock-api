@@ -5,7 +5,14 @@ const postSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  text: {
+  description: {
+    type: String,
+    required: true
+  },
+  price: {
+    type: String
+  },
+  language: {
     type: String,
     required: true
   },
@@ -18,4 +25,4 @@ const postSchema = new mongoose.Schema({
   timestamps: true
 })
 
-module.exports = mongoose.model('Example', postSchema)
+module.exports = mongoose.model('Post', postSchema)
