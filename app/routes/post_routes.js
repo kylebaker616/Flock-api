@@ -27,7 +27,7 @@ const requireToken = passport.authenticate('bearer', { session: false })
 // instantiate a router (mini app that only handles routes)
 const router = express.Router()
 
-const translate = require('../../translation-quickstart-node-v3/app')
+const { translateText, run, run2, promiseTranslate } = require('../../translation-quickstart-node-v3/app')
 
 // INDEX
 // GET /posts
@@ -51,14 +51,16 @@ router.get('/posts/:id', requireToken, (req, res, next) => {
   // req.params.id will be set based on the `:id` in the route
   Post.findById(req.params.id)
     .then(handle404)
-    .then((post) => {
-      if (post.language !== 'en') {
-        translate(post.description, 'en')
-        console.log(post.language)
-      }
+    .then(post => {
+      return run2(post)
+      // if (translatedPost.language !== 'en') {
+      //   res.status(200).json({ post: translatedPost })
+      // }
+      // res.status(200).json({ post: translatedPost })
     })
+
     // if `findById` is successful, respond with 200 and "post" JSON
-    .then(post => res.status(200).json({ post: post.toObject() }))
+    .then(transPost => res.status(200).json({ post: transPost }))
     // if an error occurs, pass it to the handler
     .catch(next)
 })
